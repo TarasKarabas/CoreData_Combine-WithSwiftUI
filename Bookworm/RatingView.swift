@@ -31,6 +31,23 @@ struct RatingView: View {
                     .onTapGesture {
                         rating = number
                 }
+////             add Voice Over fixing code for this section ... but
+//                    .accessibilityLabel("\(number == 1 ? "1 star" : "\(number) stars")")
+//                    .accessibilityRemoveTraits(.isImage)
+//                    .accessibilityAddTraits(number > rating ? .isButton : [.isButton, .isSelected])
+            }
+        }
+//         but much better to add VoiceOver solutions for whole HStack block
+        .accessibilityElement()
+        .accessibilityLabel("Rating")
+        .accessibilityValue(rating == 1 ? "1 star" : "\(rating) stars")
+        .accessibilityAdjustableAction { direction in
+            switch direction {
+            case .increment :
+                if rating < maximumRating { rating += 1 }
+            case .decrement :
+                if rating > 1 { rating -= 1 }
+            default: break
             }
         }
     }
